@@ -1,9 +1,7 @@
 function rand(min, max) {
-  min = min * 1000
-  max = max * 1000
-
-  const num = Math.random() * (max - min) + min
-  return Math.floor(num)
+  min *= 1000
+  max *= 1000
+  return Math.floor(Math.random() * (max - min) + min)
 }
 
 function f1(callback) {
