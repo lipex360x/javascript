@@ -26,20 +26,19 @@ function request(obj) {
   });
 }
 
-function loadPage(element) {
+async function loadPage(element) {
   const href = element.getAttribute("href");
   const config = {
     method: "get",
     url: href,
   };
 
-  request(config)
-    .then((response) => {
-      loadResult(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    const response = await request(config);
+    loadResult(response);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function loadResult(response) {
