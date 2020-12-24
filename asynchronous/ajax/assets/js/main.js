@@ -10,19 +10,21 @@ document.addEventListener("click", (e) => {
   }
 });
 
-function loadPage(el) {
-  const href = el.getAttribute("href");
+async function loadPage(el) {
+  try {
+    const href = el.getAttribute("href");
 
-  fetch(href)
-    .then((response) => {
-      if(response.status !== 200) throw new Error(response.statusText)
-      return response.text()
-    })
-    .then((html) => loadResult(html))
-    .catch((error) => console.error(error));
+    const response = await fetch(href);
+    if (response.status !== 200) throw new Error(response.statusText);
+
+    const html = await response.text();
+    await loadResult(html);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function loadResult(response) {
+async function loadResult(response) {
   const result = $(".result");
   result.innerHTML = response;
 }
