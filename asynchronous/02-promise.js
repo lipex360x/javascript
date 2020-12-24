@@ -6,8 +6,8 @@ function rand(min, max) {
 
 function wait(message, time) {
   return new Promise((resolve, reject) => {
-    if(typeof message !== 'string') reject(new Error('BAD VALUE'))
-    
+    if (typeof message !== "string") reject(new Error("BAD VALUE"));
+
     setTimeout(() => {
       resolve(message);
     }, time);
@@ -15,20 +15,20 @@ function wait(message, time) {
 }
 
 wait("Phrase 1", rand(1, 3))
-  .then((response) => {
-    console.log(response);
+  .then((result) => {
+    console.log(result);
     return wait("Phrase 2", rand(1, 3));
   })
-  .then((response) => {
-    console.log(response);
+  .then((result) => {
+    console.log(result);
     return wait(1234, rand(1, 3));
   })
-  .then((response) => {
-    console.log(response);
+  .then((result) => {
+    console.log(result);
   })
-  .then(()=> {
-    console.log('end of promises')
+  .then(() => {
+    console.log("end of promises");
   })
   .catch((error) => {
-    console.error('ERROR:',error);
+    console.error("ERROR:", error);
   });
