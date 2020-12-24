@@ -10,35 +10,16 @@ document.addEventListener("click", (e) => {
   }
 });
 
-function request(obj) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(obj.method, obj.url, true);
-    xhr.send();
+function loadPage(el) {
+  const href = el.getAttribute("href");
 
-    xhr.addEventListener("load", () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(xhr.responseText);
-      } else {
-        reject(xhr.statusText);
-      }
-    });
-  });
-}
-
-async function loadPage(element) {
-  const href = element.getAttribute("href");
-  const config = {
-    method: "get",
-    url: href,
-  };
-
-  try {
-    const response = await request(config);
-    loadResult(response);
-  } catch (error) {
-    console.log(error);
-  }
+  fetch(href)
+    .then((response) => {
+      if(response.status !== 200) throw new Error(response.statusText)
+      return response.text()
+    })
+    .then((html) => loadResult(html))
+    .catch((error) => console.error(error));
 }
 
 function loadResult(response) {
